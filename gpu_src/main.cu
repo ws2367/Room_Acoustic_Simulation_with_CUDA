@@ -67,7 +67,7 @@ int main(int argc, char** argv)
 	//reciever response
 	int r_x = srcIdx_x;
 	int r_y = srcIdx_y+2*GRID_Y_SIZE;
-    if(!isValidPosition(r_x, r_y, model)) {cout<<"Error: Invalid position of reciever.\n"; return -1;}
+/*    if(!isValidPosition(r_x, r_y, model)) {cout<<"Error: Invalid position of reciever.\n"; return -1;}
 	float* response  = new float[duration];
 	int recvIdx = FindBlockIdx(blockMaps, r_x, r_y);
     if(recvIdx==-1){
@@ -77,11 +77,15 @@ int main(int argc, char** argv)
 
     int subr_x = r_x - (*blockMaps)[recvIdx]->x_offset;
 	int subr_y = r_y - (*blockMaps)[recvIdx]->y_offset;
+*/
+
     Mat totalMap = Mat::zeros(model.rows, model.cols, CV_32FC1);
 
   	printf("Number of blocks is %i. Enter simulation.\n", blockMaps->size());
 
     cufftComplex* h_p;
+
+	clock_t start = clock();
 
     //main simulation
 	for(int i = 0; i < duration; ++i){  
@@ -96,7 +100,7 @@ int main(int argc, char** argv)
 		//cout << response[i] <<endl;
 		
         //show maps
-        //if(i % 50 == 0) 
+        if(i % 50 == 0) 
         showMap(blockMaps, totalMap, h_p, srcIdx_x, srcIdx_y, r_x, r_y);
         
         //showForce(blockMaps, totalMap, h_p, i);
@@ -104,9 +108,13 @@ int main(int argc, char** argv)
         
 	}
 
-    
+	clock_t end = clock();
+
+	float sec = (float)(end - start)/CLOCKS_PER_SEC;
+    cout << "Total time(sec) : " << sec << endl;
 
 	//store response
+	/*
 	ofstream fout(argv[4], ios::binary);
 	for(int i = 0; i < duration; ++i){
 		if(response[i] > 32767.0 || response[i] < -32767.0)
@@ -116,6 +124,6 @@ int main(int argc, char** argv)
 	
 	fout.write((char*)musicData, duration*sizeof(short));
 	fout.close();
-    
+    */
 	return 0;
 }

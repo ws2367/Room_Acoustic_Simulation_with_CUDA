@@ -128,7 +128,7 @@ public:
 
 	void UpdateForce(short src, int src_x, int src_y)
 	{
-        cout<<"update sound source.\n";
+        //cout<<"update sound source.\n";
 		//update sound source
 		int x = src_x - x_offset;
 		int y = src_y - y_offset;
@@ -137,13 +137,13 @@ public:
 
 		//InterFace handling
 		GpuBlock* blk;
-        cout<<"Interface handling.\n";
+        //cout<<"Interface handling.\n";
 
         //Change every if to max or min
 
 		//Right
 		for(int i = 0; i < rightSibling.size(); ++i){
-            printf("Right N.%i.\n",i);
+            //printf("Right N.%i.\n",i);
 			blk = rightSibling[i];
 			int start = blk->x_offset - x_offset;
 			if(start < 0) start = 0;
@@ -157,7 +157,7 @@ public:
 //        cout<<"Interface handling left.\n";		
 		//Left
 		for(int i = 0; i < leftSibling.size(); ++i){
-            printf("Left N.%i.\n",i);
+            //printf("Left N.%i.\n",i);
 			blk = leftSibling[i];
 			int start = blk->x_offset - x_offset;
 			if(start < 0) start = 0;
@@ -171,7 +171,7 @@ public:
 
 		//UP	
 		for(int i = 0; i < upSibling.size(); ++i){
-            printf("Up N.%i.\n",i);
+            //printf("Up N.%i.\n",i);
 			blk = upSibling[i];
 			int start = blk->y_offset - y_offset;
 			if(start < 0) start = 0;
@@ -184,7 +184,7 @@ public:
 //        cout<<"Interface handling down.\n";
 		//DOWN
 		for(int i = 0; i < downSibling.size(); ++i){
-            printf("Down N.%i.\n",i);
+            //printf("Down N.%i.\n",i);
 			blk = downSibling[i];
 			int start = blk->y_offset - y_offset;
 			if(start < 0) start = 0;

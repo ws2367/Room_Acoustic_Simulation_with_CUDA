@@ -3,6 +3,7 @@
 #include <fstream>
 #include <vector>
 #include <cassert>
+#include <ctime>
 #include "gpu_block.h"
 #include "gpu_config.h"
 #include "partitionMap.h"
@@ -80,14 +81,15 @@ int main(int argc, char** argv)
 		}
 	}
 
-
+	clock_t start = clock();
 	for(int i = 0; i < duration; ++i){  //main simulation
 
 		for(int j = 0; j < blockMaps->size(); ++j)
 			(*blockMaps)[j]->UpdatePressure(i);
 		for(int j = 0; j < blockMaps->size(); ++j)
 			(*blockMaps)[j]->UpdateForce(musicData[i], srcIdx_x, srcIdx_y);	
-		cout << i << "\n";
+		if(i%100 == 0)
+			cout << i << "\n";
 
 		//store response
 		//response[i] = (*blockMaps)[recvIdx]->P.at<double>(subr_x, subr_y);
@@ -104,6 +106,7 @@ int main(int argc, char** argv)
 			}
 		}
 
+		
 		//show maps
 		Mat img;
 		if(i % 50 == 0){
@@ -119,7 +122,9 @@ int main(int argc, char** argv)
 		imshow("P", img);
 		waitKey(5);
 	}
-
+	clock_t end = clock();
+	float sec = (float)(end - start)/CLOCKS_PER_SEC;
+	cout << "Total Time(sec): " << sec <<endl;
 
 	//store response
 	ofstream fout(argv[4], ios::binary);
